@@ -1,0 +1,106 @@
+{
+  "schema_version": "1",
+  "commit": "2ae59e458816a9ef04bd13981fd4d0ce8cd3ad63",
+  "runner": "ci",
+  "generated_at": "2026-07-27T05:37:04Z",
+  "classification": {
+    "track": "C",
+    "risk": "high",
+    "tags": [
+      "ui",
+      "api",
+      "database"
+    ]
+  },
+  "checks": [
+    {
+      "name": "format",
+      "command": "npm run format",
+      "exit_code": 0,
+      "duration_ms": 3177
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exit_code": 0,
+      "duration_ms": 2386
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "duration_ms": 6588
+    },
+    {
+      "name": "test",
+      "command": "npm run test",
+      "exit_code": 0,
+      "duration_ms": 679
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit_code": 0,
+      "duration_ms": 9283
+    },
+    {
+      "name": "migrate",
+      "command": "npm run db:migrate",
+      "exit_code": 0,
+      "duration_ms": 783
+    }
+  ],
+  "gates": [
+    {
+      "name": "format",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "lint",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "typecheck",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "test",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "build",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "migrate",
+      "status": "pass",
+      "source": "ci"
+    },
+    {
+      "name": "pr-approval",
+      "status": "not_run",
+      "source": "human"
+    },
+    {
+      "name": "ui-qa-signoff",
+      "status": "not_run",
+      "source": "human"
+    },
+    {
+      "name": "specialist-review",
+      "status": "not_run",
+      "source": "human"
+    },
+    {
+      "name": "preview",
+      "status": "not_run",
+      "source": "human"
+    }
+  ],
+  "run_url": "https://github.com/prishanf/AI-Development-Framework-Example/actions/runs/30240200675"
+}

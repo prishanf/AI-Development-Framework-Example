@@ -32,7 +32,11 @@ jobs:
 
       - name: Mermaid diagrams parse
         run: |
-          npm install --no-save @mermaid-js/mermaid-cli >/dev/null 2>&1
+          # Puppeteer-backed mmdc needs a no-sandbox config on GHA runners.
+          cat > /tmp/puppeteer.json <<'JSON'
+          { "args": ["--no-sandbox", "--disable-setuid-sandbox"] }
+          JSON
+          npm install --no-save @mermaid-js/mermaid-cli
           python3 - <<'PY'
           import pathlib, re, subprocess, sys, tempfile
           failed = []
@@ -42,10 +46,15 @@ jobs:
               for i, block in enumerate(re.findall(r'```mermaid\n(.*?)```', path.read_text(), re.S)):
                   with tempfile.NamedTemporaryFile('w', suffix='.mmd', delete=False) as fh:
                       fh.write(block)
-                  rc = subprocess.call(['npx','-y','mmdc','-i',fh.name,'-o',fh.name+'.svg'],
-                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                  if rc != 0:
+                      mmd = fh.name
+                  svg = mmd + '.svg'
+                  proc = subprocess.run(
+                      ['npx', '-y', 'mmdc', '-i', mmd, '-o', svg, '-p', '/tmp/puppeteer.json'],
+                      capture_output=True, text=True
+                  )
+                  if proc.returncode != 0:
                       failed.append('%s block %d' % (path, i + 1))
+                      sys.stderr.write((proc.stderr or proc.stdout or '(no output)') + '\n')
           if failed:
               print('Diagrams failed to parse:'); [print(' -', f) for f in failed]; sys.exit(1)
           print('All mermaid diagrams parse.')

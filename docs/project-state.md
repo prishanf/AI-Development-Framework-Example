@@ -12,44 +12,44 @@ manifest: project.yaml
 
 ## Current milestone
 
-Wiring AIDF GitHub Actions CI so PR evidence can be `runner: ci` corroborated.
+CI wired; automated gates corroborated. Review requested changes on PR #1.
 
 ## Now
 
-- Land `.github/workflows` from `reference/github/` (with Node + evidence adaptations)
-- Label PR #1 (`track-c`, `ui`, `api`, `database`) and wait for CI
-- Evidence-based review of PR #1
+- Address P1 review findings (bulk partial success; rename/edit/grouped monthly list)
+- Fix self-check mermaid step if still red
+- Re-run CI / re-review after fixes
 
 ## Recently completed
 
-- Spec / design / plan approved; implementation on `feat/1-income-expense-tracker`
-- Human UI QA Decision: approved — `docs/ui-qa-signoff.md`
-- PR opened: https://github.com/prishanf/AI-Development-Framework-Example/pull/1
+- Adopted `.github/workflows` from `reference/github/` (Node + evidence adaptations)
+- Labels on PR #1: `track-c`, `ui`, `api`, `database`
+- CI gates green with `runner: ci` — `docs/evidence/income-expense-tracker.ci.json`
+- Code review: `docs/reviews/1-income-expense-tracker.md` → `request-changes`
 
 ## Next
 
-- Confirm CI green + download `aidf-evidence` artifact
-- Complete code review; merge after approvals
+- Implement P1 fixes on `feat/1-income-expense-tracker`
+- Protect `develop` with required checks when ready
 
 ## Risks and blockers
 
 | Item | Impact | Owner | Next action |
 |---|---|---|---|
-| Human gates stay `not_run` in full evidence | Expected at PR open | prishanf | Enforce via review / CODEOWNERS / UI QA doc |
-| Branch protection not yet configured | CI advisory until required | prishanf | Protect `develop`: required checks + CODEOWNERS |
+| P1 bulk / rename / edit / grouping gaps | Blocks merge | prishanf | Fix or amend spec |
+| Human gates still `not_run` in CI evidence | Expected | prishanf | PR approval + specialist + UI QA doc |
+| Branch protection not configured | CI advisory until required | prishanf | Protect `develop` |
 
 ## Decisions and links
 
-- Spec: `docs/specs/income-expense-tracker.md` (approved)
-- Design: `docs/design/income-expense-tracker.md` (approved)
-- Plan: `docs/plans/income-expense-tracker.md` (approved)
-- UI QA: `docs/ui-qa-signoff.md` (approved)
-- Evidence (agent): `docs/evidence/income-expense-tracker.json`
-- PR doc: `docs/pull-requests/1-income-expense-tracker.md`
+- Spec / design / plan / UI QA: approved
+- Evidence (CI): `docs/evidence/income-expense-tracker.ci.json`
+- Review: `docs/reviews/1-income-expense-tracker.md`
 - PR: https://github.com/prishanf/AI-Development-Framework-Example/pull/1
+- CI run: https://github.com/prishanf/AI-Development-Framework-Example/actions/runs/30240200675
 
 ## Last verification
 
 - Date: 2026-07-26
-- Commands: local gates against `622c1e9`; CI pending after workflow land
-- Result: agent claimed pass; awaiting CI corroboration
+- Commands: GitHub Actions AIDF gates (format/lint/typecheck/test/build/migrate)
+- Result: corroborated pass (`runner: ci`); self-check mermaid failed (fixing); review `request-changes`
