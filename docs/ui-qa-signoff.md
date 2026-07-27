@@ -7,7 +7,7 @@ owner: "prishanf"
 created: 2026-07-26
 updated: 2026-07-26
 spec: docs/specs/income-expense-tracker.md
-pull-request: ""
+pull-request: "https://github.com/prishanf/AI-Development-Framework-Example/pull/1"
 ---
 
 # UI QA sign-off: Income & expense tracker

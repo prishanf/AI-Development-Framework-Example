@@ -12,12 +12,12 @@ manifest: project.yaml
 
 ## Current milestone
 
-Feature committed on `feat/1-income-expense-tracker` — opening PR into `develop`.
+PR open against `develop` — awaiting review and CI corroboration.
 
 ## Now
 
-- Push branch and open PR
-- Await PR review / CI corroboration of evidence
+- Review / merge [#1](https://github.com/prishanf/AI-Development-Framework-Example/pull/1)
+- Wire GitHub Actions CI so evidence is CI-corroborated
 
 ## Recently completed
 
@@ -47,7 +47,7 @@ Feature committed on `feat/1-income-expense-tracker` — opening PR into `develo
 - Evidence: `docs/evidence/income-expense-tracker.json`
 - PR doc: `docs/pull-requests/1-income-expense-tracker.md`
 - ADR: —
-- PR: pending
+- PR: https://github.com/prishanf/AI-Development-Framework-Example/pull/1
 
 ## Last verification
 

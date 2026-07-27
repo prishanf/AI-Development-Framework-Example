@@ -2,7 +2,7 @@
 type: pull-request
 track: C
 required_when: "every change, on every track"
-status: draft
+status: open
 issue: ""
 spec: docs/specs/income-expense-tracker.md
 plan: docs/plans/income-expense-tracker.md
