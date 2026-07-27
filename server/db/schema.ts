@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { check, sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const categories = sqliteTable('categories', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -8,7 +8,8 @@ export const categories = sqliteTable('categories', {
   archived: integer('archived', { mode: 'boolean' }).notNull().default(false),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`)
 }, table => [
-  uniqueIndex('categories_type_name_idx').on(table.type, table.name)
+  uniqueIndex('categories_type_name_idx').on(table.type, table.name),
+  check('categories_type_check', sql`${table.type} in ('income', 'expense')`)
 ])
 
 export const items = sqliteTable('items', {
@@ -29,7 +30,17 @@ export const transactions = sqliteTable('transactions', {
   month: text('month').notNull(),
   note: text('note'),
   createdAt: text('created_at').notNull().default(sql`(current_timestamp)`)
-})
+}, table => [
+  check('transactions_type_check', sql`${table.type} in ('income', 'expense')`),
+  check('transactions_amount_positive', sql`${table.amountCents} > 0`),
+  check(
+    'transactions_month_format',
+    sql`length(${table.month}) = 7
+      and substr(${table.month}, 5, 1) = '-'
+      and cast(substr(${table.month}, 1, 4) as integer) between 1900 and 2100
+      and cast(substr(${table.month}, 6, 2) as integer) between 1 and 12`
+  )
+])
 
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert

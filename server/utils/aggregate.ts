@@ -25,15 +25,23 @@ export function parseMonthKey(month: string): { year: number, month: number } {
   return { year: Number(yearPart), month: Number(monthPart) }
 }
 
+/** Canonical YYYY-MM with month 01–12. Invalid keys are skipped by aggregators. */
+export function monthBucketIndex(month: string, year: number): number | null {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) return null
+  const key = parseMonthKey(month)
+  if (key.year !== year || key.month < 1 || key.month > 12) return null
+  return key.month - 1
+}
+
 export function yearlyTotalsByMonth(
   transactions: AggregatableTransaction[],
   year: number
 ): MonthTotals[] {
   const months: AggregatableTransaction[][] = Array.from({ length: 12 }, () => [])
   for (const t of transactions) {
-    const key = parseMonthKey(t.month)
-    if (key.year === year) {
-      months[key.month - 1]!.push(t)
+    const index = monthBucketIndex(t.month, year)
+    if (index !== null) {
+      months[index]!.push(t)
     }
   }
   return months.map(totalsFor)
@@ -65,10 +73,10 @@ export function buildYearPivot(
 
   for (const t of transactions) {
     if (t.type !== type) continue
-    const key = parseMonthKey(t.month)
-    if (key.year !== year) continue
+    const index = monthBucketIndex(t.month, year)
+    if (index === null) continue
     if (!byItem.has(t.itemId)) byItem.set(t.itemId, Array(12).fill(0))
-    byItem.get(t.itemId)![key.month - 1]! += t.amountCents
+    byItem.get(t.itemId)![index]! += t.amountCents
   }
 
   const groups: PivotCategoryGroup[] = []

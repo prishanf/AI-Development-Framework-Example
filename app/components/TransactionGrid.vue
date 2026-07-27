@@ -193,6 +193,7 @@ async function save() {
     note: string | null
     sourceIndex: number
   }[] = []
+  const clientFailed = new Set<number>()
 
   rows.value.forEach((row, index) => {
     const hasItem = Boolean(row.itemId)
@@ -200,6 +201,7 @@ async function save() {
     const hasAmount = row.amount !== '' && !Number.isNaN(amount) && amount !== 0
     if (!hasItem && !hasAmount) return
     if (!hasItem || !hasAmount || amount < 0) {
+      clientFailed.add(index)
       errors.value.push(`Row ${index + 1}: Item and positive amount are both required.`)
       return
     }
@@ -213,9 +215,10 @@ async function save() {
     })
   })
 
-  if (errors.value.length) return
   if (!payload.length) {
-    rows.value = [blankRow(), blankRow(), blankRow()]
+    if (!errors.value.length) {
+      rows.value = [blankRow(), blankRow(), blankRow()]
+    }
     return
   }
 
@@ -227,19 +230,34 @@ async function save() {
       body
     })
     const failed = result.results.filter(r => r.status === 'failed')
+    const succeededSources = new Set(
+      result.results
+        .filter(r => r.status === 'created')
+        .map(r => payload[r.index]!.sourceIndex)
+    )
+    const serverFailedSources = new Set(
+      failed.map(f => payload[f.index]!.sourceIndex)
+    )
     if (failed.length) {
-      errors.value = failed.map(f => `Row ${payload[f.index]!.sourceIndex + 1}: ${f.error}`)
-      const failedSource = new Set(failed.map(f => payload[f.index]!.sourceIndex))
-      rows.value = rows.value.filter((_, i) => failedSource.has(i))
-      if (!rows.value.length) rows.value = [blankRow()]
-    } else {
-      rows.value = [blankRow(), blankRow(), blankRow()]
+      errors.value.push(
+        ...failed.map(f => `Row ${payload[f.index]!.sourceIndex + 1}: ${f.error}`)
+      )
     }
-    emit('saved')
+
+    const keepSources = new Set([...clientFailed, ...serverFailedSources])
+    const submitted = new Set(payload.map(p => p.sourceIndex))
+    rows.value = rows.value.filter((row, index) => {
+      if (succeededSources.has(index)) return false
+      if (keepSources.has(index)) return true
+      return !submitted.has(index)
+    })
+    if (!rows.value.length) rows.value = [blankRow(), blankRow(), blankRow()]
+    if (succeededSources.size) emit('saved')
   } catch (e: unknown) {
-    errors.value = [(e as { data?: { statusMessage?: string } })?.data?.statusMessage || 'Save failed.']
+    errors.value.push((e as { data?: { statusMessage?: string } })?.data?.statusMessage || 'Save failed.')
   } finally {
     saving.value = false
   }
 }
+
 </script>

@@ -30,6 +30,16 @@ describe('yearlyTotalsByMonth', () => {
     expect(months[6]).toEqual({ incomeCents: 0, expenseCents: 5780, netCents: -5780 })
     expect(months[0]).toEqual({ incomeCents: 0, expenseCents: 0, netCents: 0 })
   })
+
+  it('skips malformed month keys instead of throwing', () => {
+    const months = yearlyTotalsByMonth([
+      ...sample,
+      { type: 'expense', amountCents: 100, itemId: 9, categoryId: 2, month: '2026-13' },
+      { type: 'expense', amountCents: 100, itemId: 9, categoryId: 2, month: 'not-a-month' }
+    ], 2026)
+    expect(months).toHaveLength(12)
+    expect(months[6]?.expenseCents).toBe(5780)
+  })
 })
 
 describe('buildYearPivot', () => {

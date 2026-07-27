@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import {
-  bulkTransactionInputSchema,
+  bulkTransactionEnvelopeSchema,
+  categoryPatchSchema,
   categoryInputSchema,
   itemInputSchema,
+  itemPatchSchema,
   transactionInputSchema
 } from '../server/utils/validation'
 
@@ -48,16 +50,28 @@ describe('itemInputSchema', () => {
   })
 })
 
-describe('bulkTransactionInputSchema', () => {
-  it('accepts a batch of valid rows', () => {
+describe('bulkTransactionEnvelopeSchema', () => {
+  it('accepts a mixed batch of unknown rows (per-row validation happens later)', () => {
     const rows = [
       { itemId: 1, type: 'expense', amountCents: 100, month: '2026-07' },
-      { itemId: 2, type: 'income', amountCents: 200, month: '2026-07' }
+      { itemId: 2, type: 'income', amountCents: 0, month: '2026-07' }
     ]
-    expect(bulkTransactionInputSchema.safeParse(rows).success).toBe(true)
+    expect(bulkTransactionEnvelopeSchema.safeParse(rows).success).toBe(true)
   })
 
   it('rejects an empty batch', () => {
-    expect(bulkTransactionInputSchema.safeParse([]).success).toBe(false)
+    expect(bulkTransactionEnvelopeSchema.safeParse([]).success).toBe(false)
+  })
+})
+
+describe('rename patches', () => {
+  it('allows name-only and archived-only patches', () => {
+    expect(categoryPatchSchema.safeParse({ name: 'Salary' }).success).toBe(true)
+    expect(itemPatchSchema.safeParse({ archived: true }).success).toBe(true)
+  })
+
+  it('rejects an empty patch', () => {
+    expect(categoryPatchSchema.safeParse({}).success).toBe(false)
+    expect(itemPatchSchema.safeParse({}).success).toBe(false)
   })
 })

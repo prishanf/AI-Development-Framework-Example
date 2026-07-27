@@ -12,43 +12,44 @@ manifest: project.yaml
 
 ## Current milestone
 
-CI wired; automated gates corroborated. Review requested changes on PR #1.
+P1/P2 review findings addressed; awaiting CI + re-review on PR #1.
 
 ## Now
 
-- Address P1 review findings (bulk partial success; rename/edit/grouped monthly list)
-- Re-run CI / re-review after fixes
+- Push fix commit; confirm AIDF gates green
+- Re-review PR #1 against updated acceptance criteria
 
 ## Recently completed
 
-- Adopted `.github/workflows` from `reference/github/` (Node + evidence adaptations)
-- Labels on PR #1: `track-c`, `ui`, `api`, `database`
-- CI gates + self-check green; evidence `runner: ci` — `docs/evidence/income-expense-tracker.ci.json`
-- Code review: `docs/reviews/1-income-expense-tracker.md` → `request-changes`
+- Bulk per-row partial success (API + UI)
+- Category/item rename; transaction edit; monthly list grouped by category → item
+- CHECK constraints migration `0001`; aggregate skips bad months; bulk/API tests
+- Added migration plan, API contract, and architecture docs for the data/API design
 
 ## Next
 
-- Implement P1 fixes on `feat/1-income-expense-tracker`
+- Human re-review / approve PR #1
 - Protect `develop` with required checks when ready
 
 ## Risks and blockers
 
 | Item | Impact | Owner | Next action |
 |---|---|---|---|
-| P1 bulk / rename / edit / grouping gaps | Blocks merge | prishanf | Fix or amend spec |
-| Human gates still `not_run` in CI evidence | Expected | prishanf | PR approval + specialist + UI QA doc |
-| Branch protection not configured | CI advisory until required | prishanf | Protect `develop` |
+| Human gates still enforced outside CI evidence | Expected | prishanf | PR approval |
+| Detail design docs were late vs AIDF timing | Process gap | prishanf | Use docs going forward before API/DB work |
 
 ## Decisions and links
 
 - Spec / design / plan / UI QA: approved
+- Migration plan: `docs/migrations/income-expense-tracker.md`
+- API contract: `docs/api/income-expense-tracker.md`
+- Architecture: `docs/architecture/income-expense-tracker.md`
 - Evidence (CI): `docs/evidence/income-expense-tracker.ci.json`
 - Review: `docs/reviews/1-income-expense-tracker.md`
 - PR: https://github.com/prishanf/AI-Development-Framework-Example/pull/1
-- CI run: https://github.com/prishanf/AI-Development-Framework-Example/actions/runs/30240200675
 
 ## Last verification
 
 - Date: 2026-07-26
-- Commands: GitHub Actions AIDF gates (format/lint/typecheck/test/build/migrate)
-- Result: corroborated pass (`runner: ci`); self-check pass; review `request-changes`
+- Commands: `npm run lint`, `typecheck`, `test` (15), `build`, `db:migrate`
+- Result: local pass; CI pending after push

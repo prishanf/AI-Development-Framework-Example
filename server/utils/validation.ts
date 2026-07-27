@@ -22,8 +22,24 @@ export const transactionInputSchema = z.object({
   note: z.string().trim().max(500).optional().nullable()
 })
 
-export const bulkTransactionInputSchema = z.array(transactionInputSchema).min(1).max(200)
+/** Envelope only — each element is validated independently for partial success. */
+export const bulkTransactionEnvelopeSchema = z.array(z.unknown()).min(1).max(200)
 
+export const categoryPatchSchema = z.object({
+  archived: z.boolean().optional(),
+  name: z.string().trim().min(1).max(80).optional()
+}).refine(data => data.archived !== undefined || data.name !== undefined, {
+  message: 'Provide name and/or archived'
+})
+
+export const itemPatchSchema = z.object({
+  archived: z.boolean().optional(),
+  name: z.string().trim().min(1).max(80).optional()
+}).refine(data => data.archived !== undefined || data.name !== undefined, {
+  message: 'Provide name and/or archived'
+})
+
+/** @deprecated Prefer categoryPatchSchema / itemPatchSchema */
 export const archivePatchSchema = z.object({
   archived: z.boolean()
 })

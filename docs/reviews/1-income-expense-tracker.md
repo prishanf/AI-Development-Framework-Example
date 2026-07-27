@@ -52,5 +52,5 @@ Automated gates are now CI-corroborated (`runner: ci`). Feature shape is mostly 
 
 ## Decision
 
-- Result: `request-changes`
-- Conditions: Fix both P1s (bulk partial success; rename/edit/grouped monthly list) or explicitly amend the approved spec before merge. P2s may follow as issues if justified.
+- Result: `request-changes` → **fixes landed 2026-07-26** (bulk partial success; rename/edit/grouped list; CHECK constraints; tests; migration/API/architecture docs). Awaiting re-review.
+- Conditions: Re-verify P1/P2 on the latest commit, then approve if clean.
