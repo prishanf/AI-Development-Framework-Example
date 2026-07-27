@@ -1,0 +1,18 @@
+# AIDF CODEOWNERS — adopted from reference/github/CODEOWNERS for this solo repo.
+# Track C specialist review: require review from Code Owners in branch protection.
+
+*                           @prishanf
+
+# `database` tag — migrations / schema.
+/drizzle/                   @prishanf
+**/schema.*                 @prishanf
+
+# `infra` tag / CI.
+/.github/workflows/         @prishanf
+
+# Manifest and gate definitions.
+/project.yaml               @prishanf
+/standards/                 @prishanf
+/schemas/                   @prishanf
+/package.json               @prishanf
+/package-lock.json          @prishanf

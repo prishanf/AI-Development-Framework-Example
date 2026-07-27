@@ -1,0 +1,135 @@
+# AIDF PR-time quality gates — adopted from reference/github/workflows/aidf-gates.yml
+#
+# Project adaptations vs the reference:
+# - Node.js + native build deps (better-sqlite3)
+# - Ensure `.data/` exists before migrate
+# - CI corroborates automated checks only; human gates (PR approval, UI QA,
+#   specialist review, preview) stay not_run in the full artifact and are
+#   enforced by branch protection / CODEOWNERS / docs — not by fail-closed
+#   validate-evidence on this job (those gates are always not_run at PR open).
+
+name: AIDF gates
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential python3
+
+      - name: Validate manifest
+        run: sh reference/scripts/validate-manifest.sh project.yaml
+
+      - name: Derive classification
+        id: classify
+        env:
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          TAGS=$(printf '%s' "$LABELS" | tr ',' '\n' \
+            | grep -E '^(ui|api|database|security|mcp-write|infra|dependency|release|docs)$' \
+            | paste -sd, - || true)
+          TRACK=B
+          printf '%s' "$LABELS" | grep -qw 'track-a' && TRACK=A
+          printf '%s' "$LABELS" | grep -qw 'track-c' && TRACK=C
+          # Tags that force Track C also upgrade classification when present.
+          printf '%s' "$TAGS" | grep -Eq '(^|,)(database|security|mcp-write|infra|release)(,|$)' && TRACK=C
+          echo "tags=$TAGS"   >> "$GITHUB_OUTPUT"
+          echo "track=$TRACK" >> "$GITHUB_OUTPUT"
+          echo "Track $TRACK · tags [${TAGS:-none}]" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install dependencies
+        run: |
+          CMD=$(sed -n 's/^  install: "\(.*\)"$/\1/p' project.yaml)
+          [ -n "$CMD" ] && sh -c "$CMD" || echo "no install command configured"
+
+      - name: Prepare local database path
+        run: mkdir -p .data
+
+      - name: Run required gates
+        id: gates
+        continue-on-error: true
+        env:
+          CI: "true"
+          DATABASE_PATH: .data/tracker.db
+        run: |
+          sh reference/scripts/run-gates.sh \
+            --track "${{ steps.classify.outputs.track }}" \
+            --tags  "${{ steps.classify.outputs.tags }}" \
+            --runner ci \
+            --out evidence.json
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aidf-evidence
+          path: evidence.json
+          if-no-files-found: error
+
+      - name: Enforce automated evidence contract
+        if: always()
+        run: |
+          # Full evidence.json keeps human gates as not_run (honest). CI
+          # corroboration only covers automated checks; strip human-only gates
+          # before validate-evidence so fail-closed does not block on PR open.
+          python3 - <<'PY'
+          import json
+          HUMAN = {"pr-approval", "ui-qa-signoff", "specialist-review", "preview"}
+          with open("evidence.json") as fh:
+              evidence = json.load(fh)
+          evidence["gates"] = [g for g in evidence.get("gates", []) if g.get("name") not in HUMAN]
+          with open("evidence.ci.json", "w") as fh:
+              json.dump(evidence, fh, indent=2)
+              fh.write("\n")
+          print("Validating automated gates only:", [g["name"] for g in evidence["gates"]])
+          PY
+          sh reference/scripts/validate-evidence.sh evidence.ci.json project.yaml
+
+      - name: PR size budget
+        if: always()
+        continue-on-error: true
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          CAP=$(sed -n 's/^  pr_size_soft_cap_lines: \([0-9]*\)$/\1/p' project.yaml)
+          CAP=${CAP:-400}
+          LINES=$(git diff --numstat "$BASE" "$HEAD" \
+            | grep -vE '(lock|\.lock|-lock\.json|\.snap|/generated/|/vendor/)' \
+            | awk '{ s += $1 + $2 } END { print s+0 }')
+          echo "Changed lines (excluding generated): $LINES / $CAP" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$LINES" -gt "$CAP" ]; then
+            echo "::warning::PR is $LINES lines, over the $CAP soft cap. Split it, or justify the size in the description."
+          fi
+
+  specialist-review:
+    if: contains(github.event.pull_request.labels.*.name, 'track-c') || contains(join(github.event.pull_request.labels.*.name, ','), 'database')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Flag specialist requirement
+        run: |
+          echo "This change is Track C: it requires a named specialist review" >> "$GITHUB_STEP_SUMMARY"
+          echo "and a threat model, migration plan, or capability review per its tags." >> "$GITHUB_STEP_SUMMARY"

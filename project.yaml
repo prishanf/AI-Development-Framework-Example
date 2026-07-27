@@ -32,6 +32,7 @@ commands:
 documents:
   root: docs
   specs: docs/specs
+  design: docs/design
   plans: docs/plans
   architecture: docs/architecture
   decisions: docs/decisions
@@ -44,6 +45,10 @@ documents:
   api_contracts: docs/api
   mcp_capabilities: docs/mcp
   deployments: docs/deployments
+  pull_requests: docs/pull-requests
+  reviews: docs/reviews
+  evidence: docs/evidence
+  qa: docs/qa
 
 gates:
   spec_approval_required: true
