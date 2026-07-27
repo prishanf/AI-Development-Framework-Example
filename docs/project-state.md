@@ -17,14 +17,13 @@ CI wired; automated gates corroborated. Review requested changes on PR #1.
 ## Now
 
 - Address P1 review findings (bulk partial success; rename/edit/grouped monthly list)
-- Fix self-check mermaid step if still red
 - Re-run CI / re-review after fixes
 
 ## Recently completed
 
 - Adopted `.github/workflows` from `reference/github/` (Node + evidence adaptations)
 - Labels on PR #1: `track-c`, `ui`, `api`, `database`
-- CI gates green with `runner: ci` — `docs/evidence/income-expense-tracker.ci.json`
+- CI gates + self-check green; evidence `runner: ci` — `docs/evidence/income-expense-tracker.ci.json`
 - Code review: `docs/reviews/1-income-expense-tracker.md` → `request-changes`
 
 ## Next
@@ -52,4 +51,4 @@ CI wired; automated gates corroborated. Review requested changes on PR #1.
 
 - Date: 2026-07-26
 - Commands: GitHub Actions AIDF gates (format/lint/typecheck/test/build/migrate)
-- Result: corroborated pass (`runner: ci`); self-check mermaid failed (fixing); review `request-changes`
+- Result: corroborated pass (`runner: ci`); self-check pass; review `request-changes`
