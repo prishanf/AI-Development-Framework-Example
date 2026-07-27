@@ -3,62 +3,49 @@ type: conventions
 track: project-setup
 required_when: "recommended for any repository an agent will work in"
 status: current
-owner: ""
-updated: YYYY-MM-DD
+owner: "prishanf"
+updated: 2026-07-26
 ---
 
 # Codebase conventions
 
-Agents are told to "follow existing patterns". This document is what that sentence points at. Without it, every agent re-derives the project's style from whichever files it happened to read, and the codebase drifts one plausible-looking file at a time.
-
-Keep it short and true. A convention nobody follows is worse than an undocumented one, because it teaches the agent a pattern the codebase will contradict.
-
 ## Orientation
 
-- **What this system does:** <one paragraph>
-- **Entry points:** `<path>` — <what starts here>
-- **Where the domain logic lives:** `<path>`
-- **Where the tests live:** `<path>` — <naming pattern>
-- **Generated code — never edit by hand:** `<paths>`
+- **What this system does:** Local personal income & expense tracker (Nuxt 4 + SQLite/Drizzle). Transactions record against an **item** under a **category** under type income/expense, at month granularity (`YYYY-MM`).
+- **Entry points:** `nuxt.config.ts` / `npm run dev` — Nuxt app; `server/api/**` — Nitro routes; `server/db/**` — Drizzle schema/client/seed.
+- **Where the domain logic lives:** `server/utils/validation.ts`, `server/utils/aggregate.ts`, `server/api/**`
+- **Where the tests live:** `tests/**/*.test.ts` — Vitest, node environment
+- **Generated code — never edit by hand:** `.nuxt/`, `drizzle/meta/` snapshots after generate (prefer regenerating via `npm run db:generate`)
 
 ## Reference implementations
 
-The fastest way to convey a pattern is to name a file that does it correctly.
-
 | To add a... | Copy the shape of | Notes |
 |---|---|---|
-| API endpoint | `<path>` | <what makes it exemplary> |
-| Database query / repository | `<path>` | |
-| UI component | `<path>` | |
-| Background job | `<path>` | |
-| Test | `<path>` | |
+| API endpoint | `server/api/items/index.post.ts` | Zod parse → domain checks → Drizzle |
+| Database query / repository | `server/db/client.ts` + route handlers | Direct Drizzle on `db`; no separate repo layer yet |
+| UI component | `app/components/ui/UiButton.vue` | Variants: secondary / primary / quiet / icon |
+| Feature screen | `app/pages/month/[year]/[month].vue` | Compose `UiSurface`, `UiMetric`, shared header |
+| Test | `tests/validation.test.ts` | Pure unit tests against server utils |
 
 ## Established patterns
 
-- **Error handling:** <approach — exceptions, result types, error boundaries>
-- **Validation:** <where it happens and with what>
-- **Logging:** <structured? correlation fields? what must never be logged>
-- **Configuration:** <how config and secrets are read>
-- **State management:** <approach>
-- **Naming:** <casing, file naming, module layout>
+- **Error handling:** `createError({ statusCode, statusMessage, data })` in API routes
+- **Validation:** Zod schemas in `server/utils/validation.ts`; always `safeParse` at the boundary
+- **Amounts:** integer cents only (`amountCents`)
+- **Months:** `YYYY-MM` strings; never store day-of-month
+- **UI:** Tailwind + CSS variables in `app/assets/css/main.css`. Brand: Cal Sans display + Inter body; charcoal/paper monochrome. Use `UiButton` — do not invent one-off button styles.
+- **Naming:** Vue SFCs PascalCase; API files Nitro conventions (`index.get.ts`, `[id].patch.ts`)
 
 ## Deliberate deviations
 
-Places where the codebase knowingly does something unusual, and why. This section prevents an agent from "fixing" a decision.
-
 | Where | What looks wrong | Why it is that way |
 |---|---|---|
-| `<path>` | <apparent smell> | <reason> |
-
-## Known inconsistencies
-
-Where the codebase contradicts itself, and which side is correct going forward. Agents will find these; better they find the answer here than pick one at random.
-
-| Pattern | Old form | Current form | Migrating? |
-|---|---|---|---|
-| <e.g. data fetching> | `<old>` | `<new>` | <yes/no, and whether to convert files you touch> |
+| Spec text says Nuxt 3 | Plan/build use Nuxt 4 | Current Nuxt line; tracked as plan assumption |
+| `transactions.type` denormalized | Could join via item→category | Guards type mismatches and speeds summaries |
 
 ## Do not
 
-- <thing that looks reasonable but breaks something non-obvious>
-- <dependency or API that is being removed>
+- Reuse the flat category model from `feat/001` (no `items`, day-level dates)
+- Add purple gradients / glass glow / ad-hoc button sizes
+- Skip Zod at API boundaries
+- Store floating-point currency

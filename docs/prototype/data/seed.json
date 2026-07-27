@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "profile": "design-preview-seed",
+    "currency": "USD",
+    "description": "Starter categories/items plus a few July 2026 sample transactions for the clickable design preview."
+  },
+  "categories": [
+    { "id": "cat-salary", "type": "income", "name": "Salary", "archived": false },
+    { "id": "cat-rental", "type": "income", "name": "Rental", "archived": false },
+    { "id": "cat-dividend", "type": "income", "name": "Dividend", "archived": false },
+    { "id": "cat-interest", "type": "income", "name": "Interest", "archived": false },
+    { "id": "cat-credit-card", "type": "expense", "name": "Credit Card", "archived": false },
+    { "id": "cat-utilities", "type": "expense", "name": "Utilities", "archived": false },
+    { "id": "cat-loc", "type": "expense", "name": "Line Of Credit", "archived": false }
+  ],
+  "items": [
+    { "id": "item-salary-james", "categoryId": "cat-salary", "name": "Salary James", "archived": false },
+    { "id": "item-salary-amy", "categoryId": "cat-salary", "name": "Salary Amy", "archived": false },
+    { "id": "item-rental-1", "categoryId": "cat-rental", "name": "Rental Unit 1", "archived": false },
+    { "id": "item-dividend-td", "categoryId": "cat-dividend", "name": "Dividend TD", "archived": false },
+    { "id": "item-amex", "categoryId": "cat-credit-card", "name": "Amex Credit Card", "archived": false },
+    { "id": "item-rbc-mc", "categoryId": "cat-credit-card", "name": "RBC MC", "archived": false }
+  ],
+  "transactions": [
+    {
+      "id": "txn-1",
+      "itemId": "item-amex",
+      "type": "expense",
+      "month": "2026-07",
+      "amountCents": 4550,
+      "note": ""
+    },
+    {
+      "id": "txn-2",
+      "itemId": "item-rbc-mc",
+      "type": "expense",
+      "month": "2026-07",
+      "amountCents": 1230,
+      "note": ""
+    },
+    {
+      "id": "txn-3",
+      "itemId": "item-salary-james",
+      "type": "income",
+      "month": "2026-06",
+      "amountCents": 550000,
+      "note": ""
+    },
+    {
+      "id": "txn-4",
+      "itemId": "item-salary-amy",
+      "type": "income",
+      "month": "2026-06",
+      "amountCents": 480000,
+      "note": ""
+    },
+    {
+      "id": "txn-5",
+      "itemId": "item-rental-1",
+      "type": "income",
+      "month": "2026-06",
+      "amountCents": 220000,
+      "note": ""
+    },
+    {
+      "id": "txn-6",
+      "itemId": "item-dividend-td",
+      "type": "income",
+      "month": "2026-06",
+      "amountCents": 15000,
+      "note": ""
+    },
+    {
+      "id": "txn-7",
+      "itemId": "item-amex",
+      "type": "expense",
+      "month": "2026-06",
+      "amountCents": 42600,
+      "note": ""
+    },
+    {
+      "id": "txn-8",
+      "itemId": "item-rbc-mc",
+      "type": "expense",
+      "month": "2026-06",
+      "amountCents": 18749,
+      "note": ""
+    }
+  ]
+}

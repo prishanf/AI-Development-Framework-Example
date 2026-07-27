@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Income &amp; Expense Tracker — Yearly prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="brand">Income &amp; Expense Tracker</p>
+          <p class="brand-sub">Design prototype · Cal monochrome · local fixture</p>
+        </div>
+        <nav class="nav-links">
+          <a id="nav-this-month" href="./month.html">This month</a>
+          <a id="nav-this-year" href="./year.html">This year</a>
+          <button id="reset-fixture" type="button" class="btn-quiet">Reset fixture</button>
+        </nav>
+      </header>
+
+      <section class="surface">
+        <div class="month-head">
+          <h1 id="year-title">Year</h1>
+          <div class="nav-controls" role="group" aria-label="Year navigation">
+            <div class="nav-segment">
+              <a id="nav-prev-year" class="nav-btn" href="#" aria-label="Previous year">
+                <span class="nav-btn-icon" aria-hidden="true">‹</span>
+                <span>Prev</span>
+              </a>
+              <a id="nav-next-year" class="nav-btn" href="#" aria-label="Next year">
+                <span>Next</span>
+                <span class="nav-btn-icon" aria-hidden="true">›</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric-label">Year income</span>
+            <span id="year-income" class="metric-value money-income">$0.00</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Year expenses</span>
+            <span id="year-expense" class="metric-value money-expense">$0.00</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Net</span>
+            <span id="year-net" class="metric-value">$0.00</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="surface">
+        <h2 class="mb-3">Monthly summary</h2>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th class="text-right">Income</th>
+                <th class="text-right">Expenses</th>
+                <th class="text-right">Net</th>
+              </tr>
+            </thead>
+            <tbody id="summary-body"></tbody>
+            <tfoot id="summary-foot"></tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section class="surface">
+        <h2 class="mb-3">Income detail</h2>
+        <div id="income-detail"></div>
+      </section>
+
+      <section class="surface">
+        <h2 class="mb-3">Expense detail</h2>
+        <div id="expense-detail"></div>
+      </section>
+    </div>
+
+    <script src="./js/store.js"></script>
+    <script src="./js/year.js"></script>
+  </body>
+</html>

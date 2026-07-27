@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Income &amp; Expense Tracker — Monthly prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="brand">Income &amp; Expense Tracker</p>
+          <p class="brand-sub">Design prototype · Cal monochrome · local fixture</p>
+        </div>
+        <nav class="nav-links">
+          <a id="nav-this-month" href="./month.html">This month</a>
+          <a id="nav-this-year" href="./year.html">This year</a>
+          <button id="reset-fixture" type="button" class="btn-quiet">Reset fixture</button>
+        </nav>
+      </header>
+
+      <section class="surface">
+        <div class="month-head">
+          <h1 id="month-title">Month</h1>
+          <div class="nav-controls" role="group" aria-label="Month navigation">
+            <div class="nav-segment">
+              <a id="nav-prev" class="nav-btn" href="#" aria-label="Previous month">
+                <span class="nav-btn-icon" aria-hidden="true">‹</span>
+                <span>Prev</span>
+              </a>
+              <a id="nav-next" class="nav-btn" href="#" aria-label="Next month">
+                <span>Next</span>
+                <span class="nav-btn-icon" aria-hidden="true">›</span>
+              </a>
+            </div>
+            <a id="nav-year" class="nav-btn-quiet" href="#">Year</a>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric-label">Income</span>
+            <span id="total-income" class="metric-value money-income">$0.00</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Expenses</span>
+            <span id="total-expense" class="metric-value money-expense">$0.00</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Net</span>
+            <span id="total-net" class="metric-value">$0.00</span>
+          </div>
+        </div>
+      </section>
+
+      <details class="surface manage" open>
+        <summary>Manage categories &amp; items</summary>
+        <p class="manage-hint">
+          Add categories, then add items under each category. Archive hides them from new entries without erasing history.
+        </p>
+        <p id="manage-notice" class="toast-error" role="status"></p>
+        <div id="manage-root" class="manage-columns"></div>
+      </details>
+
+      <section class="surface" id="grid-panel">
+        <h2>Add transactions</h2>
+        <div id="grid-errors" class="toast-error" hidden></div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Item</th>
+                <th>Amount</th>
+                <th>Note</th>
+                <th class="col-actions" aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody id="grid-body"></tbody>
+          </table>
+        </div>
+        <div class="footer-actions">
+          <button id="add-row" type="button" class="btn">Add row</button>
+          <button id="save-rows" type="button" class="btn-primary">Save all rows</button>
+        </div>
+      </section>
+
+      <section class="surface">
+        <h2>Transactions this month</h2>
+        <p id="txn-empty" class="empty-note" hidden>
+          No transactions recorded for this month yet.
+        </p>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Category</th>
+                <th>Item</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Note</th>
+                <th class="col-actions" aria-label="Actions"></th>
+              </tr>
+            </thead>
+            <tbody id="txn-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="./js/store.js"></script>
+    <script src="./js/month.js"></script>
+  </body>
+</html>
