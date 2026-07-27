@@ -45,10 +45,10 @@ flowchart TB
     Shell --> Month --> Comp
   end
   subgraph api [Nitro API]
-    Cat[/api/categories]
-    Items[/api/items]
-    Txn[/api/transactions + bulk]
-    Sum[/api/summary]
+    Cat["/api/categories"]
+    Items["/api/items"]
+    Txn["/api/transactions + bulk"]
+    Sum["/api/summary"]
   end
   subgraph db [SQLite via Drizzle]
     C[categories]
