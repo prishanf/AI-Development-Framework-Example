@@ -12,30 +12,30 @@ manifest: project.yaml
 
 ## Current milestone
 
-UI QA approved — committing feature branch and opening PR into `develop`.
+Feature committed on `feat/1-income-expense-tracker` — opening PR into `develop`.
 
 ## Now
 
-- Commit implementation + docs on `feat/1-income-expense-tracker`
-- Open PR; link evidence artifact (`runner: agent` until CI corroborates)
+- Push branch and open PR
+- Await PR review / CI corroboration of evidence
 
 ## Recently completed
 
 - Spec / design / plan approved
-- Implementation + gates (`lint` / `typecheck` / `test` / `build`)
-- Preview smoke (agent) + **human UI QA Decision: approved** — see `docs/ui-qa-signoff.md`
+- Implementation commit `622c1e9` + gates (`lint` / `typecheck` / `test` / `build`)
+- Preview smoke + **human UI QA Decision: approved** — `docs/ui-qa-signoff.md`
+- Evidence artifact: `docs/evidence/income-expense-tracker.json` (`runner: agent`)
 
 ## Next
 
-- Push branch and open PR against `develop`
 - Wire GitHub Actions CI from `reference/github/` so evidence is CI-corroborated
+- Merge after PR approval
 
 ## Risks and blockers
 
 | Item | Impact | Owner | Next action |
 |---|---|---|---|
 | No CI configured yet | Evidence remains `runner: agent` | prishanf | Add workflow from `reference/github/` |
-| Human UI sign-off | — | prishanf | Done (approved 2026-07-26) |
 
 ## Decisions and links
 
@@ -44,11 +44,13 @@ UI QA approved — committing feature branch and opening PR into `develop`.
 - Prototype: `docs/prototype/README.md`
 - Plan: `docs/plans/income-expense-tracker.md` (approved)
 - UI QA: `docs/ui-qa-signoff.md` (approved)
+- Evidence: `docs/evidence/income-expense-tracker.json`
+- PR doc: `docs/pull-requests/1-income-expense-tracker.md`
 - ADR: —
 - PR: pending
 
 ## Last verification
 
 - Date: 2026-07-26
-- Commands: `npm run db:migrate && npm run db:seed && npm run dev` + Playwright smoke + human QA
-- Result: agent smoke passed; human Decision `approved`
+- Commands: `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build` against `622c1e9`
+- Result: all exit 0 (claimed; `runner: agent`); human UI QA approved

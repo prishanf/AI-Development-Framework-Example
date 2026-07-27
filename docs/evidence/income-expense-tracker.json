@@ -1,0 +1,26 @@
+{
+  "schema_version": "1",
+  "commit": "622c1e9",
+  "runner": "agent",
+  "generated_at": "2026-07-27T05:11:38Z",
+  "classification": {
+    "track": "C",
+    "risk": "high",
+    "tags": ["database", "ui", "api"]
+  },
+  "checks": [
+    { "name": "lint", "command": "npm run lint", "exit_code": 0, "duration_ms": 1400 },
+    { "name": "typecheck", "command": "npm run typecheck", "exit_code": 0, "duration_ms": 3160 },
+    { "name": "test", "command": "npm run test", "exit_code": 0, "duration_ms": 358 },
+    { "name": "build", "command": "npm run build", "exit_code": 0, "duration_ms": 3990 }
+  ],
+  "gates": [
+    { "name": "format_lint_typecheck_build", "status": "pass", "source": "human" },
+    { "name": "unit_tests", "status": "pass", "source": "human" },
+    { "name": "secret_scan", "status": "not_run", "source": "human" },
+    { "name": "pull_request_approval", "status": "not_run", "source": "human" },
+    { "name": "preview_deploy_and_smoke_test", "status": "pass", "source": "human" },
+    { "name": "migration_validation_and_schema_review", "status": "not_run", "source": "human" },
+    { "name": "specialist_review", "status": "not_run", "source": "human" }
+  ]
+}
