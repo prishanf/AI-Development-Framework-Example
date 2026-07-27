@@ -82,4 +82,4 @@ Rules: `amountCents` positive int; `month` `YYYY-MM`; `type` must match the item
 - [x] Input validation tests (`tests/validation.test.ts`)
 - [x] Bulk partial-success test (`tests/bulk-transactions.test.ts`)
 - [ ] Allowed and denied authorization tests — N/A (no auth)
-- [x] Smoke / Preview UI QA (`docs/ui-qa-signoff.md`)
+- [x] Smoke / Preview UI QA (`docs/qa/income-expense-tracker.md`)

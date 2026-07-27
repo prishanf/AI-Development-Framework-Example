@@ -155,27 +155,28 @@ flowchart TD
 - [ ] A category's type (income/expense) cannot be changed after creation — archive and recreate is the only path.
 - [ ] No day-of-month is captured or displayed anywhere; the month field round-trips as `YYYY-MM`.
 
-## Clickable prototype
+## Mockup
 
 Local review surface under docs (not Claude artifact hosting):
 
-- Folder: [`docs/prototype/`](../prototype/README.md)
-- Entry: serve `docs/prototype/` with Live Server / `python3 -m http.server`, then open `/` or `/month.html`
-- Reusable fixture: `docs/prototype/data/seed.json`
-- Shared styles: Tailwind CDN + `docs/prototype/css/styles.css`
+- Location: [`docs/design/mockups/income-expense-tracker/`](mockups/income-expense-tracker/README.md)
+- Entry: serve `docs/design/mockups/income-expense-tracker/` with Live Server / `python3 -m http.server`, then open `/` or `/month.html`
+- Reusable fixture: `docs/design/mockups/income-expense-tracker/data/seed.json`
+- Shared styles: Tailwind CDN + `docs/design/mockups/income-expense-tracker/css/styles.css`
 - Design craft: Open Design `frontend-design` skill + `cal` design system (monochrome ledger UI)
+- Not required, because: n/a — a mockup was built.
 
-Review feedback addressed in the local prototype (2026-07-26):
+Review feedback addressed in the local mockup (2026-07-26):
 
 1. **Add item under a category** — Manage panel now has an “Add item” input/button on every category (categories alone were insufficient).
-2. **Local hosting** — Prototype lives in-repo under `docs/prototype/` with a reusable `data/` folder and Tailwind/CSS; open via a local folder live server, not a remote artifact URL.
+2. **Local hosting** — Mockup lives in-repo under `docs/design/mockups/income-expense-tracker/` with a reusable `data/` folder and Tailwind/CSS; open via a local folder live server, not a remote artifact URL.
 
 ## Approval
 
 - Decision: `approved`
 - Approver: prishanf
 - Date: 2026-07-26
-- Notes: Approved after local `docs/prototype/` review (add-item-under-category, consistent button system, Cal monochrome polish). Prototype path: `docs/prototype/`.
+- Notes: Approved after local mockup review (add-item-under-category, consistent button system, Cal monochrome polish). Mockup path: `docs/design/mockups/income-expense-tracker/`.
 
 ## Agent instruction
 

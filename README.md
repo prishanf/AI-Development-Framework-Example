@@ -2,7 +2,22 @@
 
 A small personal income/expense tracker built with Nuxt 3, Drizzle ORM, and SQLite. This repository exists to exercise the [AI Development Framework](https://github.com/prishanf/AI-Development-Framework) end to end, including its GitFlow branching model (`main` + `develop`, feature/release/hotfix branches) and its design/plan/spec approval gates.
 
-Framework scaffolding (`commands/`, `standards/`, `templates/`, `schemas/`, `guide/`, `reference/`, the Claude adapter) lives at the repository root, copied from the framework at v3.0.0. See [AGENTS.md](AGENTS.md) for the process this project follows.
+## Repository layout
+
+The root mixes two things on purpose, kept visually distinct by name:
+
+- **Framework reference** (vendored as-is from AIDF, never edited here): `commands/`, `standards/`, `templates/`, `schemas/`, `guide/`, `reference/`, `.claude/`, `AGENTS.md`, `project.yaml`. These cross-reference each other by root-relative path, so they stay flat at the repository root to match the framework's own internal links — see [AGENTS.md](AGENTS.md) for the process this project follows.
+- **This app**: `app/`, `server/`, `shared/`, `tests/`, `drizzle/`, and the usual Nuxt/TypeScript config files.
+- **Project documents** (per `project.yaml`'s `documents:` map, one folder per artifact type, namespaced by feature slug): `docs/specs`, `docs/design` (including `docs/design/mockups/<slug>/` for throwaway clickable mockups), `docs/plans`, `docs/pull-requests`, `docs/reviews`, `docs/qa`, `docs/evidence`, `docs/migrations`, `docs/api`, `docs/architecture`, plus `docs/project-state.md` and `docs/conventions.md`.
+
+## Setup
+
+```bash
+npm install
+npm run db:migrate
+npm run db:seed
+npm run dev
+```
 
 ## Branching
 
@@ -17,4 +32,4 @@ Checked out as a bare repo with persistent worktrees for `main` and `develop`; s
 
 ## Status
 
-Framework bootstrap only at this point. The income/expense tracker feature itself is being built on `feat/1-income-expense-tracker` per an approved spec, design, and implementation plan — see `docs/specs/`, `docs/plans/`, and `docs/project-state.md`.
+First feature vertical slice (categories/items, monthly bulk entry, yearly pivot views) is built, tested, and reviewed on `feat/1-income-expense-tracker` — see [PR #1](https://github.com/prishanf/AI-Development-Framework-Example/pull/1) and `docs/project-state.md` for current status, evidence, and next steps.

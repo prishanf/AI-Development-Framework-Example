@@ -65,7 +65,7 @@ Guardrails:
 
 - Baseline/state source: empty SQLite file under `.data/`
 - Apply command: `npm run db:migrate && npm run db:seed`
-- Verification: unit tests + Preview UI QA (`docs/ui-qa-signoff.md`)
+- Verification: unit tests + Preview UI QA (`docs/qa/income-expense-tracker.md`)
 
 ## Production execution
 

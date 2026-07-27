@@ -30,7 +30,7 @@ Forced to Track C by the `database` tag (new `categories` / `items` / `transacti
 
 - CI run: not configured yet (first feature PR on this scaffold).
 - Evidence artifact: `docs/evidence/income-expense-tracker.json` (`runner: agent` — **not corroborating** until CI emits `runner: ci`).
-- Preview: local `npm run dev` at http://localhost:3000 — human UI QA **approved** in `docs/ui-qa-signoff.md` (2026-07-26).
+- Preview: local `npm run dev` at http://localhost:3000 — human UI QA **approved** in `docs/qa/income-expense-tracker.md` (2026-07-26).
 
 Not covered by automation:
 
@@ -46,7 +46,7 @@ Not covered by automation:
 
 ## Size
 
-~5,000 lines excluding `package-lock.json` (lockfile dominates the ~21k total). Soft 400-line cap exceeded because this is the first application vertical slice (scaffold + schema + APIs + UI + docs/prototype). Splitting would leave a non-runnable mid-state.
+~5,000 lines excluding `package-lock.json` (lockfile dominates the ~21k total). Soft 400-line cap exceeded because this is the first application vertical slice (scaffold + schema + APIs + UI + docs/design/mockups/income-expense-tracker). Splitting would leave a non-runnable mid-state.
 
 ## Documentation
 

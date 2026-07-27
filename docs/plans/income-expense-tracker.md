@@ -17,7 +17,7 @@ branch: feat/1-income-expense-tracker
 
 Ship the approved monthly + yearly personal tracker from `docs/specs/income-expense-tracker.md` and `docs/design/income-expense-tracker.md`: type → category → item hierarchy, month-only transactions (`YYYY-MM`), bulk grid entry, category/item management, and yearly pivots.
 
-Also establish the **first UI foundation** so later features reuse the same brand, tokens, layout, and Tailwind control language proven in `docs/prototype/`.
+Also establish the **first UI foundation** so later features reuse the same brand, tokens, layout, and Tailwind control language proven in `docs/design/mockups/income-expense-tracker/`.
 
 Non-goals unchanged: no auth, no multi-currency, no CSV, local SQLite only.
 
@@ -27,11 +27,11 @@ Non-goals unchanged: no auth, no multi-currency, no CSV, local SQLite only.
 
 | Area | Finding | Evidence |
 |---|---|---|
-| Current branch | AIDF scaffolding + approved docs/prototype only — no application code yet | `feat/1-income-expense-tracker` worktree |
+| Current branch | AIDF scaffolding + approved docs/design/mockups/income-expense-tracker only — no application code yet | `feat/1-income-expense-tracker` worktree |
 | Prior attempt | `feat/001-income-expense-tracker` has Nuxt + flat `categories`/`transactions` (day dates, no `items`) — **do not reuse schema/UI as-is**; treat as reference for Nuxt/Drizzle patterns only | prior branch `server/db/schema.ts` |
-| Spec vs prior code | Spec requires `items`, month granularity, cascading Type → Category → Item | approved design + `docs/prototype/` |
+| Spec vs prior code | Spec requires `items`, month granularity, cascading Type → Category → Item | approved design + `docs/design/mockups/income-expense-tracker/` |
 | Spec wording | Spec constraints say “Nuxt 3”; this plan uses **Nuxt 4** (current stack) | assumption below |
-| Design source of truth | Approved Cal monochrome prototype tokens/controls | `docs/prototype/css/styles.css` |
+| Design source of truth | Approved Cal monochrome prototype tokens/controls | `docs/design/mockups/income-expense-tracker/css/styles.css` |
 | Manifest commands | `install` / `lint` / `typecheck` / `test` / `build` / `migrate` / `seed` already declared | `project.yaml` |
 
 ## Architecture (target)
@@ -79,7 +79,7 @@ Lock the design system before feature screens so every future page inherits it:
    - `app/components/ui/UiButton.vue` — variants: `secondary` / `primary` / `quiet` / `icon` (same height/radius)
    - `app/components/ui/UiSurface.vue`, `UiMetric.vue`, `UiTypePill.vue`
 5. **Conventions** update in `docs/conventions.md`: entry points, UI component path, “copy UiButton not ad-hoc button classes”.
-6. Feature screens **must** compose these primitives and match `docs/prototype/` flows (manage add-item-under-category, segmented month nav, bulk grid, yearly pivots).
+6. Feature screens **must** compose these primitives and match `docs/design/mockups/income-expense-tracker/` flows (manage add-item-under-category, segmented month nav, bulk grid, yearly pivots).
 
 ## Change map
 
@@ -134,7 +134,7 @@ First versioned forward-only Drizzle migration. No production data. Rollback = f
 - Assumption: Amounts stored as integer cents.
 - Assumption: Category type immutable after create; item inherits type via category.
 - Risk: Bulk partial-success easy to get wrong; mitigation: dedicated tests before UI.
-- Risk: UI drift from prototype; mitigation: code shared primitives first and check against `docs/prototype/`.
+- Risk: UI drift from prototype; mitigation: code shared primitives first and check against `docs/design/mockups/income-expense-tracker/`.
 
 ## Completion checklist
 

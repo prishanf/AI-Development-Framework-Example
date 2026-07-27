@@ -11,7 +11,7 @@ Open Design–informed clickable review surface for `docs/design/income-expense-
 ## Layout
 
 ```text
-docs/prototype/
+docs/design/mockups/income-expense-tracker/
   index.html
   month.html
   year.html
@@ -29,13 +29,13 @@ Serve **this folder** over HTTP (required for `fetch('./data/seed.json')`).
 
 ### VS Code / Cursor Live Server
 
-1. Right-click `docs/prototype/index.html`
+1. Right-click `docs/design/mockups/income-expense-tracker/index.html`
 2. **Open with Live Server**
 
 ### Python
 
 ```bash
-cd docs/prototype
+cd docs/design/mockups/income-expense-tracker
 python3 -m http.server 5500
 ```
 

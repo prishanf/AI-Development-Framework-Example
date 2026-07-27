@@ -45,7 +45,7 @@ P1/P2 review findings addressed; awaiting CI + re-review on PR #1.
 - API contract: `docs/api/income-expense-tracker.md`
 - Architecture: `docs/architecture/income-expense-tracker.md`
 - Evidence (CI): `docs/evidence/income-expense-tracker.ci.json`
-- Review: `docs/reviews/1-income-expense-tracker.md`
+- Review: `docs/reviews/income-expense-tracker.md`
 - PR: https://github.com/prishanf/AI-Development-Framework-Example/pull/1
 
 ## Last verification

@@ -17,7 +17,7 @@ pull-request: "https://github.com/prishanf/AI-Development-Framework-Example/pull
 - Preview URL: http://localhost:3000/month/2026/7 (also `/year/2026`)
 - Source revision: `b79f142` base + implementation on `feat/1-income-expense-tracker` (commit before PR)
 - Data/fixture profile: `server/db/seed.ts` starter categories/items + June/July 2026 samples; reset with `rm -f .data/tracker.db && npm run db:migrate && npm run db:seed`
-- Approved design: `docs/design/income-expense-tracker.md` (+ `docs/prototype/`)
+- Approved design: `docs/design/income-expense-tracker.md` (+ `docs/design/mockups/income-expense-tracker/`)
 
 ## Scenarios reviewed
 
